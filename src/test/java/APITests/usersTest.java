@@ -16,10 +16,22 @@ public class usersTest {
 	public void setupData() {
 		userpayload = new UserData();
 		
-		userpayload.setId(3263);
+		userpayload.setId(1001);
+		userpayload.setName("saksh n");
+		userpayload.setEmail("an@gmail.com");
+		userpayload.setGender("female");
+		userpayload.setStatus("active");
 	}
 	
-	@Test
+	@Test(priority=1)
+	public void createUser() {
+		Response response = Endpoints.createUser(userpayload);
+		response.then().log().all();
+		
+		Assert.assertEquals(200, response.getStatusCode());
+	}
+	
+	@Test(priority=2)
 	public void getTestUser() {
 		Response response = Endpoints.getUser(userpayload.getId());
 		response.then().log().all();
@@ -29,5 +41,6 @@ public class usersTest {
 		UserData payload = body.as(UserData.class);
 		
 		System.out.println("user name is " + payload.getName());
+		Assert.assertEquals(200, response.getStatusCode());
 	}
 }
